@@ -115,8 +115,16 @@ public class FibonacciHeap {
      * @param x The node to delete.
      */
     public void delete(HeapNode x) {
-        decreaseKey(x, x.key - Integer.MIN_VALUE);
-        deleteMin();
+        if (x == min) {
+            deleteMin();
+        } else {
+            if (x.parent != null) {
+                cut(x);
+                cascadingCut(x.parent);
+            }
+            removeNode(x);
+            size--;
+        }
     }
 
     /**
