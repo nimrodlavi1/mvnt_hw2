@@ -111,7 +111,7 @@ public class FibonacciHeap {
             cascadingCut(x.parent);
         }
 
-        if (x.key < min.key) {
+        if (x.key <= min.key) {
             min = x;
         }
     }
@@ -137,7 +137,7 @@ public class FibonacciHeap {
 
     /**
      * Return the total number of cuts performed.
-     *
+     *s
      * @return The total number of cuts (node separations) performed in the heap.
      */
     public int totalCuts() {
@@ -193,6 +193,54 @@ public class FibonacciHeap {
         return count;
     }
 
+    /**
+     * Display the heap structure visually in a tree-like format.
+     */
+    public void display() {
+        if (min == null) {
+            System.out.println("The heap is empty.");
+            return;
+        }
+
+        System.out.println("Fibonacci Heap:");
+        HeapNode current = min;
+        int treeNumber = 1;
+        do {
+            System.out.println("Tree " + treeNumber + ":");
+            printTree(current, "", true);
+            current = current.next;
+            treeNumber++;
+        } while (current != min);
+    }
+
+    /**
+     * Print a tree starting from the given node visually.
+     *
+     * @param node    The root node of the tree to print.
+     * @param prefix  The prefix for indentation.
+     * @param isLast  Indicates whether the current node is the last child.
+     */
+    private void printTree(HeapNode node, String prefix, boolean isLast) {
+        if (node == null) return;
+
+        // Print the current node
+        System.out.print(prefix);
+        System.out.print(isLast ? "└── " : "├── ");
+        System.out.println("(" + node.key + ", \"" + node.info + "\")");
+
+        // Prepare prefix for the next level
+        prefix += isLast ? "    " : "│   ";
+
+        // Recursively print children
+        if (node.child != null) {
+            HeapNode child = node.child;
+            do {
+                printTree(child, prefix, child.next == node.child);
+                child = child.next;
+            } while (child != node.child);
+        }
+    }
+
     // Helper functions
 
     /**
@@ -226,8 +274,10 @@ public class FibonacciHeap {
     /**
      * Link two trees of the same rank.
      *
-     * @param a The first tree.
-     * @param b The second tree.
+     * Makes b the child of a.
+     *
+     * @param a The first tree (parent after linking).
+     * @param b The second tree (child after linking).
      * @return The resulting tree after linking.
      */
     private HeapNode link(HeapNode a, HeapNode b) {
@@ -236,13 +286,18 @@ public class FibonacciHeap {
             a = b;
             b = temp;
         }
+        // Remove b from the root list
         removeNode(b);
+        // Make b a child of a
         b.parent = a;
-        b.next = b.prev = b;
         if (a.child == null) {
             a.child = b;
+            b.next = b.prev = b;
         } else {
-            mergeNodes(a.child, b);
+            b.next = a.child.next;
+            b.prev = a.child;
+            a.child.next.prev = b;
+            a.child.next = b;
         }
         a.rank++;
         totalLinks++;
@@ -263,7 +318,11 @@ public class FibonacciHeap {
             x.parent.rank--;
             x.parent = null;
             x.mark = false;
-            mergeNodes(min, x);
+            // Add to root list
+            x.next = min.next;
+            x.prev = min;
+            min.next.prev = x;
+            min.next = x;
             totalCuts++;
         }
     }
