@@ -66,16 +66,23 @@ public class FibonacciHeap {
         }
 
         HeapNode oldMin = min;
+
+        // Add all children of the minimum node to the root list
         if (min.child != null) {
             HeapNode child = min.child;
             do {
+                HeapNode nextChild = child.next;
+                // Detach the child and add to root list
                 child.parent = null;
-                child = child.next;
+                child.next = min.next;
+                child.prev = min;
+                min.next.prev = child;
+                min.next = child;
+                child = nextChild;
             } while (child != min.child);
-            // Add the children to the root list
-            mergeNodes(min, min.child);
         }
 
+        // Remove the minimum node from the root list
         removeNode(min);
         size--;
 
