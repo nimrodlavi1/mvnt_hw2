@@ -5,7 +5,7 @@
  */
 public class FibonacciHeap {
 
-    private HeapNode min;
+    public HeapNode min;
     private int size;
     private int totalLinks;
     private int totalCuts;
@@ -256,13 +256,26 @@ public class FibonacciHeap {
     // Helper functions
 
     /**
+	  * 
+	  * The method returns true if and only if the heap
+	  * is empty.
+	  *   
+	  */
+	 public boolean empty()
+	 {
+		 return size == 0;
+	 }
+
+    /**
      * Consolidate trees of the same rank.
      *
      * This function merges trees in the root list to ensure that no two trees have the same rank.
      */
     private void consolidate() {
-        HeapNode[] aux = new HeapNode[size];
+        HeapNode[] aux = new HeapNode[logBase2(size) + 1];
         HeapNode current = min;
+
+        // Process each node in the root list
         do {
             HeapNode next = current.next;
             while (aux[current.rank] != null) {
@@ -273,14 +286,34 @@ public class FibonacciHeap {
             current = next;
         } while (current != min);
 
+        // Reconstruct the root list and find the new min
         min = null;
         for (HeapNode node : aux) {
             if (node != null) {
-                if (min == null || node.key < min.key) {
+                if (min == null) {
                     min = node;
+                    min.next = min.prev = min;
+                } else {
+                    node.next = min.next;
+                    node.prev = min;
+                    min.next.prev = node;
+                    min.next = node;
+                    if (node.key < min.key) {
+                        min = node;
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * Helper method to calculate log base 2 of an integer.
+     *
+     * @param n The number to calculate the logarithm for.
+     * @return The integer value of log base 2 of n.
+     */
+    private int logBase2(int n) {
+        return (int) (Math.log(n) / Math.log(2));
     }
 
     /**
@@ -299,7 +332,8 @@ public class FibonacciHeap {
             b = temp;
         }
         // Remove b from the root list
-        removeNode(b);
+        // TODO: Does this need to be done?
+        // removeNode(b);
         // Make b a child of a
         b.parent = a;
         if (a.child == null) {
@@ -414,6 +448,11 @@ public class FibonacciHeap {
             this.parent = null;
             this.rank = 0;
             this.mark = false;
+        }
+
+
+        public int getKey() {
+            return key;
         }
     }
 }
