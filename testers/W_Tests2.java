@@ -3,10 +3,10 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Test {
+public class W_Tests2 {
 
     public static void main(String[] args) {
-        Test tester = new Test();
+        W_Tests2 tester = new W_Tests2();
         tester.runAllTests();
     }
 
@@ -277,6 +277,8 @@ public class Test {
             nodes[i] = heap.insert(i, "key" + i);
         }
         if (heap.numTrees() != 10) throw new AssertionError("Initial number of trees should be 10");
+        
+        heap.display();
 
         heap.deleteMin();
         heap.deleteMin();
@@ -752,7 +754,7 @@ public class Test {
 
         heap.insert(1, "1");
         heap.deleteMin();
-
+        heap.display();
         heap.decreaseKey(node, 2);
         if (heap.size() != 4) {
             throw new AssertionError("Expected 4 nodes, but found " + heap.size());

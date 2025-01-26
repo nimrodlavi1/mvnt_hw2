@@ -1,10 +1,10 @@
-public class EladTest1 {
+public class BasicTests {
 
     public static void main(String[] args) {
         testInsertAndFindMin();
         testDeleteMin();
         testDecreaseKey();
-        // testDelete();
+        testDelete();
         testMeld();
         testTotalLinksAndCuts();
         testNumTrees();
@@ -78,8 +78,10 @@ public class EladTest1 {
         FibonacciHeap.HeapNode node2 = heap.insert(5, "B");
         FibonacciHeap.HeapNode node3 = heap.insert(20, "C");
 
+        heap.display(); 
         heap.decreaseKey(node3, 15); // This should trigger a cut
-        assertCondition(heap.totalCuts() == 1, "testTotalLinksAndCuts: Total cuts should be 1");
+        heap.display(); 
+        assertCondition(heap.totalCuts() == 0, "testTotalLinksAndCuts: Total cuts should be 0 because node3 has no parent");
         assertCondition(heap.totalLinks() == 0, "testTotalLinksAndCuts: Total links should be 0");
 
         heap.deleteMin(); // This should trigger consolidations and links

@@ -1,6 +1,6 @@
-public class FibonacciHeapTest {
+public class W_Tests1 {
     public static void main(String[] args) {
-        FibonacciHeapTest tester = new FibonacciHeapTest();
+        W_Tests1 tester = new W_Tests1();
         tester.runAllTests();
     }
 
