@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Test",
+            "request": "launch",
+            "mainClass": "Test",
+            "projectName": "ds_hw2_341e9b41"
+        },
+        {
+            "type": "java",
+            "name": "FibonacciHeapTest",
+            "request": "launch",
+            "mainClass": "FibonacciHeapTest",
+            "projectName": "ds_hw2_341e9b41"
+        },
+        {
+            "type": "java",
+            "name": "Launch Java Program",
+            "request": "launch",
+            "mainClass": "",
+            "vmArgs": "-ea"
+        }
+    ]
+}
