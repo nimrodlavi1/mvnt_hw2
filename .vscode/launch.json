@@ -2,6 +2,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "W_Tests2",
+            "request": "launch",
+            "mainClass": "W_Tests2",
+            "projectName": "mvnt_hw2_e20368bf"
+        },
+        {
+            "type": "java",
+            "name": "W_Tests1",
+            "request": "launch",
+            "mainClass": "W_Tests1",
+            "projectName": "mvnt_hw2_e20368bf"
+        },
+        {
+            "type": "java",
+            "name": "BasicTests",
+            "request": "launch",
+            "mainClass": "BasicTests",
+            "projectName": "mvnt_hw2_e20368bf"
+        },
+        {
+            "type": "java",
             "name": "Test",
             "request": "launch",
             "mainClass": "Test",

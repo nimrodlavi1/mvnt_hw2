@@ -379,6 +379,9 @@ public class FibonacciHeap {
      * @param x The node to start cascading cuts from.
      */
     private void cascadingCut(HeapNode x) {
+        if (x == null) {
+            return;
+        }
         HeapNode parent = x.parent;
         if (parent != null) {
             if (!x.mark) {
