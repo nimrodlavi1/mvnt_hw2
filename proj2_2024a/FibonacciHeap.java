@@ -122,8 +122,17 @@ public class FibonacciHeap {
      * @param x The node to delete.
      */
     public void delete(HeapNode x) {
-        decreaseKey(x, x.key - Integer.MIN_VALUE);
-        deleteMin();
+        if (x == min) {
+            deleteMin();
+        } else {
+            if (x.parent != null) {
+                cut(x);
+                cascadingCut(x.parent);
+            }
+            // TODO: Does we need to update cuts?
+            removeNode(x);
+            size--;
+        }
     }
 
     /**
@@ -204,6 +213,7 @@ public class FibonacciHeap {
 
         System.out.println("Fibonacci Heap:");
         System.out.println("Minimum Node: (" + min.key + ", \"" + min.info + "\")");
+        System.out.println("totalCuts: " + totalCuts + ", totalLinks: " + totalLinks + ", size: " + size);
 
         HeapNode current = min;
         int treeNumber = 1;
