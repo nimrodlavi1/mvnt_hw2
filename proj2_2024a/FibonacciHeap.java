@@ -203,6 +203,8 @@ public class FibonacciHeap {
         }
 
         System.out.println("Fibonacci Heap:");
+        System.out.println("Minimum Node: (" + min.key + ", \"" + min.info + "\")");
+
         HeapNode current = min;
         int treeNumber = 1;
         do {
